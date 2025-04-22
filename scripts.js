@@ -32,7 +32,20 @@ class HashMap {
     this.length++;
 
     if (this.length > this.capacity * this.loadFactor) {
-      //need to do
+      this.resize();
+    }
+  }
+
+  resize() {
+    const oldBuckets = this.buckets;
+    this.capacity *= 2;
+    this.buckets = new Array(this.capacity).fill(null).map(() => []);
+    this.length = 0;
+
+    for (const bucket of oldBuckets) {
+      for (const [key, value] of bucket) {
+        this.set(key, value);
+      }
     }
   }
 
